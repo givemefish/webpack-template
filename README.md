@@ -1,5 +1,5 @@
 # webpack-template
-Webpack Template
+Webpack Template (no front-end library)
 
 ## Development
 ```sh
