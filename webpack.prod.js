@@ -229,7 +229,7 @@ module.exports = {
     // 1. "files": Mapping of all asset filenames to their corresponding output file.
     // 2. "entrypoints": Array of files which are included in "index.html"
     new ManifestPlugin({
-      filename: 'asset-manifest.json',
+      fileName: 'asset-manifest.json',
       publicPath: paths.publicUrlOrPath,
       generate: (seed, files, entrypoints) => {
         const manifestFiles = files.reduce((manifest, file) => {
