@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-delete require.cache[require.resolve('./paths')];
+delete require.cache[require.resolve('./paths.js')];
 
 const { NODE_ENV } = process.env;
 if (!NODE_ENV) {

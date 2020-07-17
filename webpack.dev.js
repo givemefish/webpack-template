@@ -4,7 +4,8 @@ const postcssNormalize = require('postcss-normalize');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const webpack = require('webpack');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const paths = require('./config/paths');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const paths = require('./config/paths.js');
 const getClientEnvironment = require('./config/getClientEnvironment');
 
 const appName = process.env.APP_NAME || 'Template';
@@ -190,7 +191,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: true,
       template: paths.appHtml,
-      title: appName
+      title: appName,
+      publicPath: 'build'
     }),
     new webpack.DefinePlugin(env.stringified),
     new webpack.HotModuleReplacementPlugin(),
@@ -212,6 +214,17 @@ module.exports = {
           entrypoints: entrypointFiles
         };
       }
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: paths.appPublic,
+          to: paths.appBuild,
+          globOptions: {
+            ignore: '**/index.html'
+          }
+        }
+      ]
     }),
     new CleanWebpackPlugin()
   ],

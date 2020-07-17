@@ -7,6 +7,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const safePostCssParser = require('postcss-safe-parser');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const paths = require('./config/paths');
 const getClientEnvironment = require('./config/getClientEnvironment');
 
@@ -218,9 +219,6 @@ module.exports = {
       }
     }),
     new webpack.DefinePlugin(env.stringified),
-    // HotModuleReplacementPlugin
-    // CaseSensitivePathsPlugin
-    // WatchMissingNodeModulesPlugin
     new MiniCssExtractPlugin({
       filename: 'static/css/[name].[contenthash:8].css',
       chunkFilename: 'static/css/[name].[contenthash:8].chunk.css'
@@ -242,6 +240,17 @@ module.exports = {
           entrypoints: entrypointFiles
         };
       }
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: paths.appPublic,
+          to: paths.appBuild,
+          globOptions: {
+            ignore: '**/index.html'
+          }
+        }
+      ]
     }),
     new CleanWebpackPlugin()
   ],
